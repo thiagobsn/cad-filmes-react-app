@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import EstruturaDaPagina from './components/EstruturaDaPagina.jsx';
+import Filme from './pages/Filme.jsx';
 
 ReactDOM.render(
   <React.StrictMode>
-
-    <EstruturaDaPagina/>
+    
+    <Filme/>
   
   </React.StrictMode>,
   document.getElementById('root')
