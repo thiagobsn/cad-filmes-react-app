@@ -1,6 +1,7 @@
 import { Formik, Form, Field } from 'formik';
 import {Component} from 'react';
 import * as yup from 'yup';
+import {Grid, Button} from '@material-ui/core'
 
 
 const FILME_INICIAL = {
@@ -30,50 +31,51 @@ class Cadastro extends Component {
 
     render(){
         return (
-            <Formik 
-                enableReinitialize
-                validateOnMount={true}
-                validationSchema={FilmeSchema}
-                initialValues={this.props.filme || FILME_INICIAL}
-                onSubmit={(values,actions) => this.salvarFilme(values, actions)}
-                render={({errors, touched, isSubmitting}) => (
-                    <Form>
-                        <div>
+            <Grid container>
+                <Formik 
+                    enableReinitialize
+                    validateOnMount={true}
+                    validationSchema={FilmeSchema}
+                    initialValues={this.props.filme || FILME_INICIAL}
+                    onSubmit={(values,actions) => this.salvarFilme(values, actions)}
+                    render={({errors, touched, isSubmitting}) => (
+                        <Form>
                             <div>
-                                <label>Título</label>
-                                <Field 
-                                    name="titulo"
-                                    placeholder="Título"
-                                />
-                                {touched.titulo && errors.titulo && <span>{errors.titulo}</span>}
+                                <div>
+                                    <label>Título</label>
+                                    <Field 
+                                        name="titulo"
+                                        placeholder="Título"
+                                    />
+                                    {touched.titulo && errors.titulo && <span>{errors.titulo}</span>}
+                                </div>
+                                <div>
+                                    <label>Subtítulo</label>
+                                    <Field 
+                                        name="subtitulo"
+                                        placeholder="Subtítulo"
+                                    />
+                                    {touched.subtitulo && errors.subtitulo && <span>{errors.subtitulo}</span>}
+                                </div>
+                                <div>
+                                    <label>Diretor</label>
+                                    <Field 
+                                        name="diretor"
+                                        placeholder="Diretor"
+                                    />
+                                    {touched.diretor && errors.diretor && <span>{errors.diretor}</span>}
+                                </div>
+                                <div>
+                                    <Button variant="contained">Novo</Button>
+                                    <Button variant="contained" type="submit" disabled={isSubmitting}>Salvar</Button>
+                                </div>
                             </div>
-                            <div>
-                                <label>Subtítulo</label>
-                                <Field 
-                                    name="subtitulo"
-                                    placeholder="Subtítulo"
-                                />
-                                {touched.subtitulo && errors.subtitulo && <span>{errors.subtitulo}</span>}
-                            </div>
-                            <div>
-                                <label>Diretor</label>
-                                <Field 
-                                    name="diretor"
-                                    placeholder="Diretor"
-                                />
-                                {touched.diretor && errors.diretor && <span>{errors.diretor}</span>}
-                            </div>
-                            <div>
-                                <button>Novo</button>
-                                <button type="submit" disabled={isSubmitting}>Salvar</button>
-                            </div>
-                        </div>
-                    </Form>
-                )}
+                        </Form>
+                    )}
 
-            > 
-
-            </Formik>
+                > 
+                </Formik>
+            </Grid>
         )
     }
 

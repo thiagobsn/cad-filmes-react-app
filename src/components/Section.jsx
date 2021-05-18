@@ -1,4 +1,5 @@
 import React from 'react';
+import {Grid} from '@material-ui/core'
 
 
 const Section = props => {
@@ -6,10 +7,10 @@ const Section = props => {
     const {titulo, children} = props;
 
     return (
-        <div className="section">
+        <Grid container>
             <h2>{titulo}</h2>
             {children}
-        </div>
+        </Grid>
     )
 
 }

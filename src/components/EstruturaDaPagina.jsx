@@ -1,15 +1,20 @@
 import {Component} from 'react';
+import {Container, Grid} from '@material-ui/core';
 
 class EstruturaDaPagina extends Component {
     render(){
         return (
-            <div className="mainPage">
-                <div className="header">
-                    <h1>Aplicação de Locadora</h1>
-                    <h2>{this.props.titulo}</h2>
-                </div>
+            <Container>
+                <Grid container>
+                    <Grid item xs={12}>
+                        <h1>Aplicação de Locadora</h1>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <h2>{this.props.titulo}</h2>
+                    </Grid> 
+                </Grid>
                 {this.props.children}
-            </div>
+            </Container>
         )
     }
 }
