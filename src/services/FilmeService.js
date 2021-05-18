@@ -20,6 +20,20 @@ class FilmeService {
             })
     }
 
+    inserirFilme(filme){
+        return axios.post(BASE_URL, filme)
+        .catch(error => {
+            throw error;
+        })
+    }
+
+    atualizarFilme(filme){
+        return axios.put(BASE_URL, filme)
+        .catch(error => {
+            throw error;
+        })
+    }
+
 }
 
 export default new FilmeService();

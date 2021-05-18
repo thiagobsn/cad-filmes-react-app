@@ -3,6 +3,7 @@ import React, {Component}  from 'react';
 import EstruturaDaPagina from '../components/EstruturaDaPagina';
 import Section from '../components/Section';
 import Listagem from '../components/Listagem';
+import Cadastro from '../components/Cadastro';
 import FilmeService from '../services/FilmeService';
 
 class Filme extends Component {
@@ -17,11 +18,9 @@ class Filme extends Component {
 
     }
 
-    carregarFilmes(){
-        FilmeService.buscarFilmes()
-                    .then(data => {
-                        this.setState({filmes:data})
-                    }); 
+    async carregarFilmes(){
+        const filmes = await FilmeService.buscarFilmes();
+        this.setState({filmes:filmes})
     }
 
     editarFilme(filme){
@@ -32,9 +31,22 @@ class Filme extends Component {
     }
 
     excluirFilme(filme){
-        // let filmesAtualizados = this.state.filmes.filter(filme => filme.id !== filmeAExcluir.id);
-        // this.setState({filmes : filmesAtualizados});
         FilmeService.excluirFilme(filme.id).then(() => this.carregarFilmes());
+    }
+
+    salvarFilme = filme => {
+        if(filme.id){
+            FilmeService.atualizarFilme(filme).then(() => {
+                this.carregarFilmes();
+                this.setState({filmeEmEdicao: null});
+            });
+            return;
+        }else{
+            FilmeService.inserirFilme(filme).then(() => {
+                this.carregarFilmes();
+                 this.setState({filmeEmEdicao: null});
+            });
+        }
     }
 
 
@@ -57,7 +69,7 @@ class Filme extends Component {
             <>
                 <EstruturaDaPagina titulo='Filmes'>
                     <Section titulo="Cadastro de Filmes">
-                        <h1>Teste</h1>
+                        <Cadastro filme={this.state.filmeEmEdicao} salvar={this.salvarFilme}/>
                     </Section>
 
                     <Section titulo="Listagem de Filmes">
