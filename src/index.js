@@ -6,7 +6,6 @@ import Filme from './pages/Filme';
 
 ReactDOM.render(
   <React.StrictMode>
-
     <Filme/>
   
   </React.StrictMode>,
