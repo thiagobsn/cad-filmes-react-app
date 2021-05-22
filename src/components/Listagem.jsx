@@ -1,4 +1,6 @@
-import {Grid, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper} from '@material-ui/core'
+import {Grid, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper, IconButton} from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import {Component} from 'react';
 
 class Listagem extends Component {
@@ -32,8 +34,8 @@ class Listagem extends Component {
 
                     <Grid container>
                         <Grid item xs={11}>
-                            <TableContainer component={Paper}>
-                                <Table size="smal">
+                            <TableContainer component={Paper} elevation={3}>
+                                <Table size="small">
 
                                     <TableHead>
                                         <TableRow>
@@ -47,13 +49,21 @@ class Listagem extends Component {
 
                                     <TableBody>
                                         {this.props.filmes.map(filme => (
-                                            <TableRow>
+                                            <TableRow key={filme.id}>
                                                 <TableCell>#</TableCell>
                                                 <TableCell>{filme.titulo}</TableCell>
                                                 <TableCell>{filme.subtitulo}</TableCell>
                                                 <TableCell>{filme.diretor}</TableCell>
-                                                <TableCell> <button onClick={() => this.handleEditar(filme)}>editar</button> </TableCell>
-                                                <TableCell> <button onClick={() => this.handleExcluir(filme)}>excluir</button></TableCell>
+                                                <TableCell width="5%"> 
+                                                    <IconButton aria-label="delete" onClick={() => this.handleEditar(filme)}>
+                                                        <EditIcon />
+                                                    </IconButton>
+                                                </TableCell>
+                                                <TableCell width="5%"> 
+                                                    <IconButton aria-label="delete" onClick={() => this.handleExcluir(filme)}>
+                                                        <DeleteIcon />
+                                                    </IconButton>
+                                                </TableCell>
 
                                             </TableRow>
                                         ))}
@@ -65,35 +75,6 @@ class Listagem extends Component {
 
                         </Grid>
                     </Grid>
-
-                    // <div>
-                    //     <table>
-
-                    //         <thead>
-                    //             <tr>
-                    //                 <th>#</th>
-                    //                 <th>Título</th>
-                    //                 <th>Subtítulo</th>
-                    //                 <th>Diretor</th>
-                    //                 <th colSpan="2">Acões</th>
-                    //             </tr>
-                    //         </thead>
-
-                    //         <tbody>
-                    //             {this.props.filmes.map(filme => (
-                    //                 <tr key={filme.id}>
-                    //                     <td>#</td>
-                    //                     <td>{filme.titulo}</td>
-                    //                     <td>{filme.subtitulo}</td>
-                    //                     <td>{filme.diretor}</td>
-                    //                     <td> <button onClick={() => this.handleEditar(filme)}>editar</button> </td>
-                    //                     <td> <button onClick={() => this.handleExcluir(filme)}>excluir</button></td>
-                    //                 </tr>
-                    //             ))}
-                    //         </tbody>
-
-                    //     </table>
-                    // </div>
                 }
             </>
 

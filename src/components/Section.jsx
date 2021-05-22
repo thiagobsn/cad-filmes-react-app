@@ -8,32 +8,15 @@ const Section = props => {
 
     return (
         <Grid container>
-            <h2>{titulo}</h2>
-            {children}
+            <Grid item xs={12}>
+                <h2>{titulo}</h2>
+            </Grid>
+            <Grid item xs={12}>
+                {children}
+            </Grid>
         </Grid>
     )
 
 }
-
-
-// import {Component} from 'react';
-
-// class Section extends Component {
-
-//     constructor(props){
-//         super(props);
-//          this.children = this.props.children;
-//          his.titulo = this.props.titulo;
-//     }
-
-//     render(){
-//         return (
-//             <div className="section">
-//                 <h2>{titulo}</h2>
-//                 {children}
-//             </div>
-//         )
-//     }
-// }
 
 export default Section; 

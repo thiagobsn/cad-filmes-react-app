@@ -49,6 +49,10 @@ class Filme extends Component {
         }
     }
 
+    limparFilmeEmEdicao = () =>{
+        this.setState({filmeEmEdicao:null});
+    }
+
 
     componentDidMount(){
         this.carregarFilmes();
@@ -69,7 +73,7 @@ class Filme extends Component {
             <>
                 <EstruturaDaPagina titulo='Filmes'>
                     <Section titulo="Cadastro de Filmes">
-                        <Cadastro filme={this.state.filmeEmEdicao} salvar={this.salvarFilme}/>
+                        <Cadastro filme={this.state.filmeEmEdicao} salvar={this.salvarFilme} limpar={this.limparFilmeEmEdicao} />
                     </Section>
 
                     <Section titulo="Listagem de Filmes">
