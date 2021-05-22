@@ -1,90 +1,83 @@
 
-import React, {Component}  from 'react';
+import React, {useState, useEffect}  from 'react';
 import EstruturaDaPagina from '../components/EstruturaDaPagina';
 import Section from '../components/Section';
 import Listagem from '../components/Listagem';
 import Cadastro from '../components/Cadastro';
 import FilmeService from '../services/FilmeService';
 
-class Filme extends Component {
+const Filme = props => {
 
-    constructor(props){
-        super(props);
+    // constructor(props){
+    //     super(props);
 
-        this.state = {filmes : []};
+    //     this.state = {filmes : []};
 
-        this.excluirFilme = this.excluirFilme.bind(this);
-        this.editarFilme  = this.editarFilme.bind(this);
+    //     this.excluirFilme = this.excluirFilme.bind(this);
+    //     this.editarFilme  = this.editarFilme.bind(this);
 
-    }
+    // }
 
-    async carregarFilmes(){
+    const [filmes, setFilmes] = useState([]);
+    const [filmeEmEdicao, setFilmeEmEdicao] = useState();
+    
+    useEffect(() =>{
+        carregarFilmes();
+    },[]);
+
+    useEffect(() =>{
+        console.log('Filme - useEffect - filmeEmEdicao em edição:', filmeEmEdicao)
+    },[filmeEmEdicao]);
+
+    const carregarFilmes = async () => {
         const filmes = await FilmeService.buscarFilmes();
-        this.setState({filmes:filmes})
-    }
+        setFilmes(filmes);
+    };
 
-    editarFilme(filme){
-        this.setState({filmeEmEdicao:filme}, () => {
-            console.log(this.state.filmeEmEdicao)
-        });
+    const editarFilme = (filme) => {
+        setFilmeEmEdicao(filme);
        
-    }
+    };
 
-    excluirFilme(filme){
-        FilmeService.excluirFilme(filme.id).then(() => this.carregarFilmes());
-    }
+    const excluirFilme = (filme) => {
+        FilmeService.excluirFilme(filme.id).then(() => carregarFilmes());
+    };
 
-    salvarFilme = filme => {
+    const salvarFilme = filme => {
         if(filme.id){
             FilmeService.atualizarFilme(filme).then(() => {
-                this.carregarFilmes();
-                this.setState({filmeEmEdicao: null});
+                carregarFilmes();
+                setFilmeEmEdicao(null);
             });
             return;
         }else{
             FilmeService.inserirFilme(filme).then(() => {
-                this.carregarFilmes();
-                 this.setState({filmeEmEdicao: null});
+                carregarFilmes();
+                setFilmeEmEdicao(null);
             });
         }
-    }
+    };
 
-    limparFilmeEmEdicao = () =>{
-        this.setState({filmeEmEdicao:null});
-    }
-
-
-    componentDidMount(){
-        this.carregarFilmes();
-    }
-
-
-    componentDidUpdate(prevProps, prevState){
-        if(prevState.filmeEmEdicao === this.state.filmeEmEdicao){
-            return true;
-        }
-
-        console.log('Filme - componentDidUpdate - this.state.filmeEmEdicao em edição:', this.state.filmeEmEdicao)
-    }
+    const limparFilmeEmEdicao = () =>{
+        setFilmeEmEdicao(null);
+    };
     
+    return (
+        <>
+            <EstruturaDaPagina titulo='Filmes'>
+                <Section titulo="Cadastro de Filmes">
+                    <Cadastro filme={filmeEmEdicao} salvar={salvarFilme} limpar={limparFilmeEmEdicao} />
+                </Section>
 
-    render(){
-        return (
-            <>
-                <EstruturaDaPagina titulo='Filmes'>
-                    <Section titulo="Cadastro de Filmes">
-                        <Cadastro filme={this.state.filmeEmEdicao} salvar={this.salvarFilme} limpar={this.limparFilmeEmEdicao} />
-                    </Section>
+                <Section titulo="Listagem de Filmes">
+                    <Listagem filmes={filmes} editar={editarFilme} excluir={excluirFilme}/>
+                </Section>
 
-                    <Section titulo="Listagem de Filmes">
-                        <Listagem filmes={this.state.filmes} editar={this.editarFilme} excluir={this.excluirFilme}/>
-                    </Section>
+            </EstruturaDaPagina>
+            
+        </>
+    )
 
-                </EstruturaDaPagina>
-                
-            </>
-        )
-    }
 }
 
 export default Filme;
