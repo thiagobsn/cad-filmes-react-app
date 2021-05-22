@@ -8,20 +8,10 @@ import FilmeService from '../services/FilmeService';
 
 const Filme = props => {
 
-    // constructor(props){
-    //     super(props);
-
-    //     this.state = {filmes : []};
-
-    //     this.excluirFilme = this.excluirFilme.bind(this);
-    //     this.editarFilme  = this.editarFilme.bind(this);
-
-    // }
-
     const [filmes, setFilmes] = useState([]);
     const [filmeEmEdicao, setFilmeEmEdicao] = useState();
     
-    useEffect(() =>{
+    useEffect(() => {
         carregarFilmes();
     },[]);
 
