@@ -13,6 +13,14 @@ class FilmeService {
             });
     }
 
+    buscarFilme(id){
+        return axios.get(`${BASE_URL}/${id}`)
+            .then(response => response.data)
+            .catch(error =>{
+                throw error;
+            });
+    }
+
     excluirFilme(id){
         return axios.delete(`${BASE_URL}/${id}`)
             .catch(error => {

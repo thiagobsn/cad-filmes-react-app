@@ -2,6 +2,7 @@ import {Grid, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, 
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import {Component} from 'react';
+import {Link} from 'react-router-dom';
 
 class Listagem extends Component {
 
@@ -55,7 +56,7 @@ class Listagem extends Component {
                                                 <TableCell>{filme.subtitulo}</TableCell>
                                                 <TableCell>{filme.diretor}</TableCell>
                                                 <TableCell width="5%"> 
-                                                    <IconButton aria-label="delete" onClick={() => this.handleEditar(filme)}>
+                                                    <IconButton aria-label="editar" component={Link} to={`/filmes/cadastro/${filme.id}`}>
                                                         <EditIcon />
                                                     </IconButton>
                                                 </TableCell>

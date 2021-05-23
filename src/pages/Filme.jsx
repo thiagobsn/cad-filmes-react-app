@@ -55,6 +55,7 @@ const Filme = props => {
     return (
         <>
             <EstruturaDaPagina titulo='Filmes'>
+                
                 <Section titulo="Cadastro de Filmes">
                     <Cadastro filme={filmeEmEdicao} salvar={salvarFilme} limpar={limparFilmeEmEdicao} />
                 </Section>

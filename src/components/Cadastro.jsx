@@ -1,7 +1,7 @@
 import { Formik, Form, Field } from 'formik';
-import {Component} from 'react';
 import * as yup from 'yup';
-import {Grid, Button, TextField} from '@material-ui/core'
+import {Grid, Button, TextField} from '@material-ui/core';
+import {Link, useHistory} from 'react-router-dom';
 
 
 const FILME_INICIAL = {
@@ -18,105 +18,113 @@ const FilmeSchema = yup.object().shape({
 
 });
 
-class Cadastro extends Component {
+const Cadastro = props => {
 
-    salvarFilme(values, actions){
+    const {filme, salvar, limpar} = props;
+
+    const history = useHistory();
+
+    const salvarFilme = (values, actions) => {
         actions.setSubmitting(true);
         console.log('values ', values);
-        this.props.salvar(values);
+        salvar(values);
         actions.resetForm();
         setTimeout(() => actions.setSubmitting(false), 5000);
+        history.push("/filmes/listagem");
 
-    }
+    };
 
-    handleChange(name, value, setFieldValue){
+    const handleChange = (name, value, setFieldValue) => {
         setFieldValue(name, value);
-    }
+    };
 
-    handleNovoFilme(handleReset){
-        this.props.limpar();
+    const handleNovoFilme = (handleReset) => {
+        limpar();
         handleReset(FILME_INICIAL);
-    }
+    };
 
-    render(){
-        return (
-                    <Formik 
-                        enableReinitialize
-                        validateOnMount={true}
-                        validationSchema={FilmeSchema}
-                        initialValues={this.props.filme || FILME_INICIAL}
-                        onSubmit={(values,actions) => this.salvarFilme(values, actions)}
-                        render={({values, errors, touched, setFieldValue, setFieldTouched, handleReset, isSubmitting}) => (
-                            <Form>
-                                <>
-                                    <Grid container spacing={3}>
-                                        <Grid item xs={11}>
-                                            <Field
-                                                component={TextField} 
-                                                name="titulo"
-                                                label="Títilo"
-                                                variant="outlined"
-                                                fullWidth
-                                                value={values.titulo}
-                                                onChange={(e) => this.handleChange('titulo',e.target.value, setFieldValue)}
-                                                onFocus={() => setFieldTouched('titulo')} 
-                                                error={touched.titulo && errors.titulo}
-                                                helperText={touched.titulo && errors.titulo}                                            
-                                            />
-                                        </Grid>
-                                        <Grid item xs={11}>
-                                            <Field
-                                                component={TextField} 
-                                                name="subtitulo"
-                                                label="Subtítilo"
-                                                variant="outlined"
-                                                size="small"
-                                                fullWidth
-                                                value={values.subtitulo}
-                                                onChange={(e) => this.handleChange('subtitulo',e.target.value, setFieldValue)}
-                                                onFocus={() => setFieldTouched('subtitulo')} 
-                                                error={touched.subtitulo && errors.subtitulo}
-                                                helperText={touched.subtitulo && errors.subtitulo}                                            
-                                            />
-                                        </Grid>
-                                        <Grid item xs={11}>
-                                            <Field
-                                                component={TextField} 
-                                                name="diretor"
-                                                label="Diretor"
-                                                variant="outlined"
-                                                size="small"
-                                                fullWidth
-                                                value={values.diretor}
-                                                onChange={(e) => this.handleChange('diretor',e.target.value, setFieldValue)}
-                                                onFocus={() => setFieldTouched('diretor')} 
-                                                error={touched.diretor && errors.diretor}
-                                                helperText={touched.diretor && errors.diretor}                                            
-                                            />
-                                        </Grid>
-                                        <Grid item xs={11}>
 
-                                            <Grid container spacing={3} justify="flex-end">
-                                                <Grid item>
-                                                    <Button variant="contained" onClick={() => this.handleNovoFilme(handleReset)}>Novo</Button>
-                                                </Grid>
-                                                <Grid item>
-                                                <Button variant="contained" type="submit" disabled={isSubmitting} color="primary">Salvar</Button>
-                                                </Grid>
-                                            </Grid>
+    return (
+                <Formik 
+                    enableReinitialize
+                    validateOnMount={true}
+                    validationSchema={FilmeSchema}
+                    initialValues={filme || FILME_INICIAL}
+                    onSubmit={(values,actions) => salvarFilme(values, actions)}
+                > 
 
-                                        </Grid> 
-
+                {({values, errors, touched, setFieldValue, setFieldTouched, handleReset, isSubmitting}) => (
+                        <Form>
+                            <>
+                                <Grid container spacing={3}>
+                                    <Grid item xs={11}>
+                                        <Field
+                                            component={TextField} 
+                                            name="titulo"
+                                            label="Títilo"
+                                            variant="outlined"
+                                            fullWidth
+                                            value={values.titulo}
+                                            onChange={(e) => handleChange('titulo',e.target.value, setFieldValue)}
+                                            onFocus={() => setFieldTouched('titulo')} 
+                                            error={touched.titulo && errors.titulo}
+                                            helperText={touched.titulo && errors.titulo}                                            
+                                        />
                                     </Grid>
-                                </>
+                                    <Grid item xs={11}>
+                                        <Field
+                                            component={TextField} 
+                                            name="subtitulo"
+                                            label="Subtítilo"
+                                            variant="outlined"
+                                            size="small"
+                                            fullWidth
+                                            value={values.subtitulo}
+                                            onChange={(e) => handleChange('subtitulo',e.target.value, setFieldValue)}
+                                            onFocus={() => setFieldTouched('subtitulo')} 
+                                            error={touched.subtitulo && errors.subtitulo}
+                                            helperText={touched.subtitulo && errors.subtitulo}                                            
+                                        />
+                                    </Grid>
+                                    <Grid item xs={11}>
+                                        <Field
+                                            component={TextField} 
+                                            name="diretor"
+                                            label="Diretor"
+                                            variant="outlined"
+                                            size="small"
+                                            fullWidth
+                                            value={values.diretor}
+                                            onChange={(e) => handleChange('diretor',e.target.value, setFieldValue)}
+                                            onFocus={() => setFieldTouched('diretor')} 
+                                            error={touched.diretor && errors.diretor}
+                                            helperText={touched.diretor && errors.diretor}                                            
+                                        />
+                                    </Grid>
+                                    <Grid item xs={11}>
 
-                            </Form>
-                        )}
+                                        <Grid container spacing={3} justify="flex-end">
+                                            <Grid item>
+                                                <Button variant="contained" component={Link} to="/filmes/listagem">Voltar</Button>
+                                            </Grid>
+                                            <Grid item>
+                                                <Button variant="contained" onClick={() => handleNovoFilme(handleReset)}>Novo</Button>
+                                            </Grid>
+                                            <Grid item>
+                                                <Button variant="contained" type="submit" disabled={isSubmitting} color="primary">Salvar</Button>
+                                            </Grid>
+                                        </Grid>
 
-                    > 
-                    </Formik>
-        )
-    }
+                                    </Grid> 
+
+                                </Grid>
+                            </>
+
+                        </Form>
+                    )}
+                </Formik>
+    )
+    
 
 }
 

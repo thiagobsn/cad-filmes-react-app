@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import Filme from './pages/Filme';
 import { criarServidor } from './services/mirage-server';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import routes from './routes';
 
 
 const ambiente = process.env.NODE_ENV;
@@ -12,10 +13,13 @@ if(ambiente !== 'production'){
 }
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Filme/>
-  
-  </React.StrictMode>,
+  <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <Switch>
+      {routes.map( (route, index) => (
+        <Route key={index} path={route.path} component={route.component} exact={route.exact} />
+      ))}
+    </Switch>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
