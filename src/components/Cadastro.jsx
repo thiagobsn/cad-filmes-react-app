@@ -24,12 +24,11 @@ const Cadastro = props => {
 
     const history = useHistory();
 
-    const salvarFilme = (values, actions) => {
+    const salvarFilme =  async (values, actions) => {
         actions.setSubmitting(true);
         console.log('values ', values);
-        salvar(values);
-        actions.resetForm();
-        setTimeout(() => actions.setSubmitting(false), 5000);
+        await salvar(values);
+        actions.resetForm();    
         history.push("/filmes/listagem");
 
     };
@@ -67,7 +66,7 @@ const Cadastro = props => {
                                             value={values.titulo}
                                             onChange={(e) => handleChange('titulo',e.target.value, setFieldValue)}
                                             onFocus={() => setFieldTouched('titulo')} 
-                                            error={touched.titulo && errors.titulo}
+                                            error={touched.titulo}
                                             helperText={touched.titulo && errors.titulo}                                            
                                         />
                                     </Grid>
@@ -81,8 +80,9 @@ const Cadastro = props => {
                                             fullWidth
                                             value={values.subtitulo}
                                             onChange={(e) => handleChange('subtitulo',e.target.value, setFieldValue)}
-                                            onFocus={() => setFieldTouched('subtitulo')} 
-                                            error={touched.subtitulo && errors.subtitulo}
+                                            onFocus={() => setFieldTouched('subtitulo')}
+                                           
+                                            error={touched.subtitulo }
                                             helperText={touched.subtitulo && errors.subtitulo}                                            
                                         />
                                     </Grid>
@@ -97,7 +97,7 @@ const Cadastro = props => {
                                             value={values.diretor}
                                             onChange={(e) => handleChange('diretor',e.target.value, setFieldValue)}
                                             onFocus={() => setFieldTouched('diretor')} 
-                                            error={touched.diretor && errors.diretor}
+                                            error={touched.diretor }
                                             helperText={touched.diretor && errors.diretor}                                            
                                         />
                                     </Grid>

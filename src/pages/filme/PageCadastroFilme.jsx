@@ -30,17 +30,21 @@ const PageCadastroFilme = props => {
         setFilmeEmEdicao(filme);
     }
 
-    const salvarFilme = filme => {
+    const salvarFilme = async filme => {
+
         if(filme.id){
-            FilmeService.atualizarFilme(filme).then(() => {
+            await FilmeService.atualizarFilme(filme).then(() => {
                 setFilmeEmEdicao(null);
+                console.log('PageCadastroFilme - salvarFilme - atualizarFilme');
             });
             return;
-        }else{
-            FilmeService.inserirFilme(filme).then(() => {
-                setFilmeEmEdicao(null);
-            });
         }
+
+        await FilmeService.inserirFilme(filme).then(() => {
+            setFilmeEmEdicao(null);
+            console.log('PageCadastroFilme - salvarFilme - inserirFilme');
+        });
+        
     };
 
     const limparFilmeEmEdicao = () =>{
